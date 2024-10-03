@@ -1,0 +1,29 @@
+/* DEPENDENCIES */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* REUSABLE */
+  .title {
+    @apply text-3xl md:text-4xl;
+  }
+
+  /* MAIN PAGE */
+  #main-outer-div {
+    @apply flex flex-col min-h-screen;
+  }
+
+  #main-inner-div {
+    @apply flex-grow w-full;
+  }
+
+  /* ERROR PAGE */
+  .error-page {
+    @apply h-full flex flex-col items-center px-5 justify-center;
+  }
+}
+
+.min-width {
+  min-width: 250px;
+}
