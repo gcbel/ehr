@@ -2,6 +2,7 @@ const Patient = require("../models/patient");
 
 // Get all patients
 exports.getAllPatients = async (req, res) => {
+  console.log("getAllPatients");
   try {
     const patients = await Patient.find();
     res.status(200).json(patients);
@@ -23,6 +24,7 @@ exports.getPatientById = async (req, res) => {
 
 // Create a new patient
 exports.createPatient = async (req, res) => {
+  console.log("createPatient", req.body);
   const patient = new Patient(req.body);
   try {
     const newPatient = await patient.save();
