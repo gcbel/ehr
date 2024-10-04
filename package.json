@@ -7,7 +7,8 @@
     "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "node server/seeds/seed.js",
-    "start": "node server --ignore client"
+    "start": "node server --ignore client",
+    "devREST": "concurrently \"cd server && npm run watchREST\" \"cd client && npm run dev\""
   },
   "keywords": [],
   "author": "",
