@@ -1,8 +1,8 @@
-# ehr
+# Curis Electronic Health Record
 
 ## Description
 
-_ is a user-centric Electronic Health Record (EHR) system designed to streamline patient data management and enhance healthcare delivery. Built with a focus on interoperability, security, and ease of use, _ enables healthcare professionals to access, update, and share patient information seamlessly. Built with React, Vite, Tailwind, Framer, Node.js, Express.js, MongoDB, Mongoose and JWT.
+Curis is a user-centric Electronic Health Record (EHR) system designed to streamline patient data management and enhance healthcare delivery. Built with a focus on interoperability, security, and ease of use, Curis enables healthcare professionals to access, update, and share patient information seamlessly. Built with React, Vite, Tailwind, Framer, Node.js, Express.js, MongoDB, Mongoose and JWT.
 
 Visit the site [here]().
 
