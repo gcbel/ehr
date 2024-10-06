@@ -1,14 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const patientRoutes = require("./routes/patientRoutes");
+
 const db = require("./config/connection");
 const app = express();
+
+const apiRoutes = require("./routes/index.js");
+
 const path = require("path");
 
 require("dotenv").config();
 
 app.use(express.json());
-app.use("/api/patients", patientRoutes);
+app.use("/api", apiRoutes);
 
 const PORT = process.env.PORT || 3001;
 
