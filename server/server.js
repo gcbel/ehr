@@ -1,48 +1,25 @@
-const { ApolloServer } = require("@apollo/server");
-const { authMiddleware } = require("./utils/auth");
-const { expressMiddleware } = require("@apollo/server/express4");
-const { typeDefs, resolvers } = require("./schemas");
-
-const db = require("./config/connection");
+// DEPENDENCIES
 const express = require("express");
-const path = require("path");
-
+const mongoose = require("mongoose");
 require("dotenv").config();
 
-const PORT = process.env.PORT || 3001;
+const db = require("./config/connection");
 const app = express();
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
 
-const startApolloServer = async () => {
-  await server.start();
+// MIDDLEWARE
 
-  app.use(express.urlencoded({ extended: false }));
-  app.use(express.json());
+app.use(express.json());
 
-  if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../client/dist")));
 
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-    });
-  }
+// API
+const apiRoutes = require("./routes/index.js");
+app.use("/api", apiRoutes);
 
-  app.use(
-    "/graphql",
-    expressMiddleware(server, {
-      context: authMiddleware,
-    })
-  );
+const PORT = process.env.PORT || 3001;
 
-  db.once("open", () => {
-    app.listen(PORT, () => {
-      console.log(`Visit site at http://localhost:3000`);
-      console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
-    });
+// SERVER
+db.once("open", () => {
+  app.listen(PORT, () => {
+    console.log(`REST APIs listening at http://localhost:${PORT}`);
   });
-};
-
-startApolloServer();
+});
