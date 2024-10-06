@@ -5,6 +5,10 @@ const patientRoutes = require("../routes/patientRoutes");
 const Patient = require("../models/patient");
 const STRINGS = require("../utils/constants");
 
+const first_name = "John";
+const last_name = "Doe";
+const full_name = `${first_name} ${last_name}`;
+
 const app = express();
 app.use(express.json());
 app.use("/api/patients", patientRoutes);
@@ -12,10 +16,7 @@ app.use("/api/patients", patientRoutes);
 // Mock the database connection
 beforeAll(async () => {
   const url = `mongodb://127.0.0.1/${STRINGS.EHR_DB}`;
-  await mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(url, {});
 });
 
 afterAll(async () => {
@@ -26,9 +27,9 @@ afterAll(async () => {
 describe("Patient API", () => {
   let patientId;
 
-  it("should create a new patient", async () => {
+  it(`should create new patient ${full_name}`, async () => {
     const res = await request(app).post("/api/patients").send({
-      name: "John Doe",
+      name: full_name,
       age: 30,
       DOB: "9/22/1998",
       address: "123 Main St",
@@ -36,7 +37,7 @@ describe("Patient API", () => {
       email: "john.doe@example.com",
       medicalHistory: "No known allergies",
     });
-    console.log(res);
+
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty("_id");
     patientId = res.body._id;
@@ -48,28 +49,28 @@ describe("Patient API", () => {
     expect(res.body.length).toBeGreaterThan(0);
   });
 
-  //   it("should get a single patient by ID", async () => {
-  //     const res = await request(app).get(`/api/patients/${patientId}`);
-  //     expect(res.statusCode).toEqual(200);
-  //     expect(res.body).toHaveProperty("_id", patientId);
-  //   });
+  it("should get a single patient by ID", async () => {
+    const res = await request(app).get(`/api/patients/${patientId}`);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("_id", patientId);
+  });
 
-  //   it("should update a patient by ID", async () => {
-  //     const res = await request(app).put(`/api/patients/${patientId}`).send({
-  //       name: "Jane Doe",
-  //       age: 31,
-  //       address: "456 Main St",
-  //       phone: "555-555-5556",
-  //       email: "jane.doe@example.com",
-  //       medicalHistory: "No known allergies",
-  //     });
-  //     expect(res.statusCode).toEqual(200);
-  //     expect(res.body).toHaveProperty("name", "Jane Doe");
-  //   });
+  it("should update (change name) a patient by ID", async () => {
+    const res = await request(app).put(`/api/patients/${patientId}`).send({
+      name: "Jane Doe", 
+      age: 31,
+      address: "456 Main St",
+      phone: "555-555-5556",
+      email: "jane.doe@example.com",
+      medicalHistory: "No known allergies",
+    });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("name", "Jane Doe");
+  });
 
-  //   it("should delete a patient by ID", async () => {
-  //     const res = await request(app).delete(`/api/patients/${patientId}`);
-  //     expect(res.statusCode).toEqual(200);
-  //     expect(res.body).toHaveProperty("message", "Patient deleted");
-  //   });
+  it("should delete a patient by ID", async () => {
+    const res = await request(app).delete(`/api/patients/${patientId}`);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("message", "Patient deleted");
+  });
 });
