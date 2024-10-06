@@ -1,0 +1,75 @@
+const request = require("supertest");
+const express = require("express");
+const mongoose = require("mongoose");
+const patientRoutes = require("../routes/patientRoutes");
+const Patient = require("../models/patient");
+const STRINGS = require("../utils/constants");
+
+const app = express();
+app.use(express.json());
+app.use("/api/patients", patientRoutes);
+
+// Mock the database connection
+beforeAll(async () => {
+  const url = `mongodb://127.0.0.1/${STRINGS.EHR_DB}`;
+  await mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+});
+
+afterAll(async () => {
+  await mongoose.connection.db.dropDatabase();
+  await mongoose.connection.close();
+});
+
+describe("Patient API", () => {
+  let patientId;
+
+  it("should create a new patient", async () => {
+    const res = await request(app).post("/api/patients").send({
+      name: "John Doe",
+      age: 30,
+      DOB: "9/22/1998",
+      address: "123 Main St",
+      phone: "555-555-5555",
+      email: "john.doe@example.com",
+      medicalHistory: "No known allergies",
+    });
+    console.log(res);
+    expect(res.statusCode).toEqual(201);
+    expect(res.body).toHaveProperty("_id");
+    patientId = res.body._id;
+  });
+
+  it("should get all patients", async () => {
+    const res = await request(app).get("/api/patients");
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.length).toBeGreaterThan(0);
+  });
+
+  //   it("should get a single patient by ID", async () => {
+  //     const res = await request(app).get(`/api/patients/${patientId}`);
+  //     expect(res.statusCode).toEqual(200);
+  //     expect(res.body).toHaveProperty("_id", patientId);
+  //   });
+
+  //   it("should update a patient by ID", async () => {
+  //     const res = await request(app).put(`/api/patients/${patientId}`).send({
+  //       name: "Jane Doe",
+  //       age: 31,
+  //       address: "456 Main St",
+  //       phone: "555-555-5556",
+  //       email: "jane.doe@example.com",
+  //       medicalHistory: "No known allergies",
+  //     });
+  //     expect(res.statusCode).toEqual(200);
+  //     expect(res.body).toHaveProperty("name", "Jane Doe");
+  //   });
+
+  //   it("should delete a patient by ID", async () => {
+  //     const res = await request(app).delete(`/api/patients/${patientId}`);
+  //     expect(res.statusCode).toEqual(200);
+  //     expect(res.body).toHaveProperty("message", "Patient deleted");
+  //   });
+});
