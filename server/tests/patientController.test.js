@@ -1,17 +1,25 @@
+// DEPENDENCIES
 const request = require("supertest");
 const express = require("express");
 const mongoose = require("mongoose");
-const patientRoutes = require("../routes/patientRoutes");
+
 const Patient = require("../models/patient");
 const STRINGS = require("../utils/constants");
 
+// DATA
 const first_name = "John";
 const last_name = "Doe";
 const full_name = `${first_name} ${last_name}`;
 
 const app = express();
+
+// MIDDLEWARE
 app.use(express.json());
-app.use("/api/patients", patientRoutes);
+
+// API
+const apiRoutes = require("../routes/index.js");
+
+app.use("/api", apiRoutes);
 
 // Mock the database connection
 beforeAll(async () => {
@@ -57,7 +65,7 @@ describe("Patient API", () => {
 
   it("should update (change name) a patient by ID", async () => {
     const res = await request(app).put(`/api/patients/${patientId}`).send({
-      name: "Jane Doe", 
+      name: "Jane Doe",
       age: 31,
       address: "456 Main St",
       phone: "555-555-5556",
