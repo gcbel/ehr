@@ -15,21 +15,29 @@ Configure environment variables in as specified in `.env.EXAMPLE` in a `.env` fi
 
 Webpage can be viewed in any browser and navigation links in the top right can be used to navigate to sections on the page.
 
-**Patient Records Management**: Create, update, and manage patient records, including demographics, medical history, and visit notes.
+#### Patient Records Management: 
+Create, update, and manage patient records, including demographics, medical history, and visit notes.
 
-**Appointment Scheduling**: Integrated scheduling system to track patient appointments and physician availability.
+#### Appointment Scheduling:
+Integrated scheduling system to track patient appointments and physician availability.
 
-**Prescription Management**: Digitally manage prescriptions, including e-prescribing, renewals, and medication tracking.
+#### Prescription Management:
+Digitally manage prescriptions, including e-prescribing, renewals, and medication tracking.
 
-**Lab Results Tracking**: Upload, review, and manage lab results directly in the system for easy access.
+#### Lab Results Tracking: 
+Upload, review, and manage lab results directly in the system for easy access.
 
-**Care Coordination**: Facilitate better communication and coordination between healthcare providers.
+#### Care Coordination: 
+Facilitate better communication and coordination between healthcare providers.
 
-**Secure Messaging**: Encrypted messaging for patient-provider communication.
+#### Secure Messaging: 
+Encrypted messaging for patient-provider communication.
 
-**Data Analytics**: Generate patient summaries and visualize health trends with built-in analytics tools.
+#### Data Analytics: 
+Generate patient summaries and visualize health trends with built-in analytics tools.
 
-**HIPAA-Compliant Security**: Robust encryption and access control to ensure the privacy and integrity of patient data.
+#### Security: 
+Robust encryption and access control to ensure the privacy and integrity of patient data.
 
 ## Credits
 
